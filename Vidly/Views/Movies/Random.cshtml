@@ -1,0 +1,44 @@
+﻿@using Vidly.Models
+@model Vidly.ViewModels.RandomMovieViewModel
+@{
+    ViewBag.Title = "Random";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@* C# code is written by prefixing it with an at sign *@
+@* Razor View Engine allows you to code HTML or C# here and it parses it out*@
+
+@*1) This is for use when passing the model to the View*@
+
+@*This bit of code allows you to render attributes dynamically. *@
+@{
+    var className = Model.Customers.Count > 0 ? "popular" : null;
+}
+
+<div class="page-header">
+    <h1 id="title">Movies</h1>
+</div>
+
+<h2 class ="@className">@Model.Movie.Name</h2>
+
+@if (Model.Customers.Count == 0)
+{
+    <p>No one has rented this movie before.</p>
+}
+else
+{
+
+    <ul>
+        @foreach (var customer in Model.Customers)
+        {
+            <li>@customer.Name</li>
+        }
+    </ul>
+}
+
+
+@* 2) This is for use when using the ViewData dictionary, need to cast to expose methods. Also contains a magic string of "Movie"*@
+@*<h2>@( ((Movie)ViewData["Movie"]).Name)</h2>*@
+
+@* 3) ViewBag...Movie object name is not resolved at compile time and can be different from Controller.
+@ViewBag.Movie *@
